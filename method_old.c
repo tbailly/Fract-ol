@@ -1,37 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_compute_iterations.c                            :+:      :+:    :+:   */
+/*   method_old.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbailly- <tbailly-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/28 15:12:41 by tbailly-          #+#    #+#             */
-/*   Updated: 2018/02/28 18:16:50 by tbailly-         ###   ########.fr       */
+/*   Created: 2018/02/28 14:45:14 by tbailly-          #+#    #+#             */
+/*   Updated: 2018/03/02 11:45:28 by tbailly-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
-t_xy	*ft_push_back_xy(t_xy *start, float x, float y)
-{
-	t_xy	*tmp;
-	t_xy	*new;
-
-	tmp = start;
-	while(tmp && tmp->next)
-		tmp = tmp->next;
-	if (!(new = (t_xy*)malloc(sizeof(t_xy))))
-		return (NULL);
-	new->x = x;
-	new->y = y;
-	new->next = NULL;
-
-	if (tmp)
-		tmp->next = new;
-	else
-		start = new;
-	return (start);
-}
 
 t_xy	*ft_check_loop(t_xy *start, float x, float y)
 {
@@ -49,7 +28,7 @@ t_xy	*ft_check_loop(t_xy *start, float x, float y)
 	return (start);
 }
 
-t_pt	*ft_compute_pt(t_pt *point, int max_iter)
+t_point	*ft_compute_pt(t_point *point)
 {
 	float	res;
 	float	x;
@@ -62,7 +41,7 @@ t_pt	*ft_compute_pt(t_pt *point, int max_iter)
 	point->iter = 0;
 	start = NULL;
 	res = x * x + y * y;
-	while (res < 4 && point->iter < max_iter)
+	while (res < 4 && point->iter < MAX_ITER)
 	{
 		//printf("%i --- %f;%f -> %f \n", point->iter, x, y, res);
 		tmp = x;
@@ -75,15 +54,57 @@ t_pt	*ft_compute_pt(t_pt *point, int max_iter)
 	return (point);
 }
 
-t_pt	*ft_compute_iterations(t_pt *start)
+t_point	*ft_compute_iterations(t_point *start)
 {
-	t_pt	*tmp;
+	t_point	*tmp;
+	int		i;
 
 	tmp = start;
+	i = 0;
 	while (tmp)
 	{
-		tmp = ft_compute_pt(tmp, 100);
+		tmp = ft_compute_pt(tmp);
+		i++;
 		tmp = tmp->next;
 	}
 	return (start);
+}
+
+t_point	*ft_create_list(float startx, float starty, float step)
+{
+	t_point	*start;
+	float i;
+	float j;
+	float resx;
+	float resy;
+
+	start = NULL;
+	i = 0;
+	while (i < WIN_HEIGHT)
+	{
+		j = 0;
+		while (j < WIN_WIDTH)
+		{
+			resx = startx + (step * j);
+			resy = starty + (step * i);
+			start = ft_push_back_point(start, resx, resy);
+			j++;
+		}
+		i++;
+	}
+	return (start);
+}
+
+void	create_fractal(t_params params)
+{
+	t_point		*start;
+
+	start = ft_create_list(params.min_x, params.min_y, params.step);	
+	start = ft_compute_iterations(start);
+	params.img_str = ft_draw(start, params.img_str, WIN_WIDTH, WIN_HEIGHT);
+
+	//ft_print_points(start);
+	ft_print_map(start);
+
+	mlx_put_image_to_window(params.mlx_pt->mlx, params.mlx_pt->win, params.mlx_pt->img, 0, 0);
 }

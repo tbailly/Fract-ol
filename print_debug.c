@@ -6,15 +6,15 @@
 /*   By: tbailly- <tbailly-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 15:45:39 by tbailly-          #+#    #+#             */
-/*   Updated: 2018/02/28 18:22:00 by tbailly-         ###   ########.fr       */
+/*   Updated: 2018/03/01 10:35:02 by tbailly-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	ft_print_points(t_pt *start)
+void	ft_print_points(t_point *start)
 {
-	t_pt	*point;
+	t_point	*point;
 	int		i;
 
 	i = 0;
@@ -29,9 +29,9 @@ void	ft_print_points(t_pt *start)
 	printf("-----  END POINTS  ----- \n");
 }
 
-void	ft_print_map(t_pt *start)
+void	ft_print_map(t_point *start)
 {
-	t_pt	*point;
+	t_point	*point;
 	int		i;
 	float tmpy;
 
