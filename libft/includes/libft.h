@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbailly- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tbailly- <tbailly-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 10:43:18 by tbailly-          #+#    #+#             */
-/*   Updated: 2017/11/25 01:18:37 by tbailly-         ###   ########.fr       */
+/*   Updated: 2018/03/06 15:31:32 by tbailly-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void				ft_putstrarr(char **s);
 char				*ft_itoaa(int value);
 char				*ft_itoa_base(int value, int base);
 unsigned	int		ft_abs(int a);
+double				ft_abs_dbl(double a);
 
 t_list				*ft_lstnew(void const *content, size_t content_size);
 void				ft_lstdelone(t_list **alst, void(*del)(void *, size_t));

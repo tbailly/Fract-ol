@@ -6,7 +6,7 @@
 #    By: tbailly- <tbailly-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 14:55:46 by tbailly-          #+#    #+#              #
-#    Updated: 2018/02/08 20:43:30 by tbailly-         ###   ########.fr        #
+#    Updated: 2018/03/06 21:32:04 by tbailly-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,8 @@ LIB_SRC		=	ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 				\
 				ft_swap.c ft_strup.c ft_strlw.c ft_strcleandbl.c ft_strrepchr.c \
 				ft_putstrarr.c ft_itoa_base.c ft_abs.c ft_min.c ft_max.c \
+				ft_abs_dbl.c \
+				\
 				ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c \
 				ft_lstmap.c
 LIBS		=	$(addprefix $(LIB_PATH)/, $(LIB_SRC))
