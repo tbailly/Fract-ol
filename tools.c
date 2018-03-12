@@ -6,15 +6,15 @@
 /*   By: tbailly- <tbailly-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 10:31:28 by tbailly-          #+#    #+#             */
-/*   Updated: 2018/03/06 21:47:57 by tbailly-         ###   ########.fr       */
+/*   Updated: 2018/03/12 17:33:54 by tbailly-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	ft_exit_clean(t_params *params_pt, int must_free)
+void	ft_exit_clean(void)
 {
-	if (must_free)
-		mlx_destroy_image(params_pt->mlx_pt->mlx, params_pt->mlx_pt->img);
+	printf("EXIT\n");
+	// mlx_destroy_image(params->mlx->mlx, params->mlx->img);
 	exit(0);
 }

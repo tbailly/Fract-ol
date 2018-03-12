@@ -6,12 +6,13 @@
 #    By: tbailly- <tbailly-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/28 14:40:30 by tbailly-          #+#    #+#              #
-#    Updated: 2018/03/06 21:47:52 by tbailly-         ###   ########.fr        #
+#    Updated: 2018/03/07 18:59:16 by tbailly-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 	=	fractol
-FLAGS	=	-Werror -Wall -Wextra -g
+# FLAGS	=	-Werror -Wall -Wextra -g
+FLAGS	=	-g
 LIB		=	-L libft/ -lft
 MLX		=	-lmlx -framework OpenGL -framework AppKit
 

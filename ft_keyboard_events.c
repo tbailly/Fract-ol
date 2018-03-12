@@ -6,85 +6,85 @@
 /*   By: tbailly- <tbailly-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 20:49:17 by tbailly-          #+#    #+#             */
-/*   Updated: 2018/03/06 21:52:45 by tbailly-         ###   ########.fr       */
+/*   Updated: 2018/03/12 17:34:09 by tbailly-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static	void	ft_move(int keycode, t_params *params_pt)
+static	void	ft_move(int keycode, t_thread **all_threads)
 {
 	if (keycode == 126)
-		params_pt->min_y -= params_pt->step * 100;
+		all_threads[0]->params->min_y -= all_threads[0]->params->step * 100;
 	else if (keycode == 124)
-		params_pt->min_x += params_pt->step * 100;
+		all_threads[0]->params->min_x += all_threads[0]->params->step * 100;
 	else if (keycode == 125)
-		params_pt->min_y += params_pt->step * 100;
+		all_threads[0]->params->min_y += all_threads[0]->params->step * 100;
 	else if (keycode == 123)
-		params_pt->min_x -= params_pt->step * 100;
-	ft_refresh_fractal(*params_pt);
+		all_threads[0]->params->min_x -= all_threads[0]->params->step * 100;
+	ft_refresh_fractal(all_threads);
 }
 
-static	void	ft_precision(int keycode, t_params *params_pt)
+static	void	ft_precision(int keycode, t_thread **all_threads)
 {
-	if (keycode == 69 && params_pt->max_iter < 10000)
-		params_pt->max_iter += 5;
-	if (keycode == 78 && params_pt->max_iter > 100)
-		params_pt->max_iter -= 5;
-	ft_refresh_fractal(*params_pt);
+	if (keycode == 69 && all_threads[0]->params->max_iter < 10000)
+		all_threads[0]->params->max_iter += 5;
+	if (keycode == 78 && all_threads[0]->params->max_iter > 100)
+		all_threads[0]->params->max_iter -= 5;
+	ft_refresh_fractal(all_threads);
 }
 
-static	void	ft_change_fractal(int keycode, t_params *params_pt)
+static	void	ft_change_fractal(int keycode, t_thread **all_threads)
 {
-	*params_pt = ft_init_params(*params_pt);
+	all_threads[0]->params = ft_init_params(all_threads[0]->params);
 	if (keycode == 12)
 	{
-		params_pt->cur_fractal--;
-		if (params_pt->cur_fractal == -1)
-			params_pt->cur_fractal = 5;
+		all_threads[0]->params->cur_fractal--;
+		if (all_threads[0]->params->cur_fractal == -1)
+			all_threads[0]->params->cur_fractal = 5;
 	}
 	else if (keycode == 14)
 	{
-		params_pt->cur_fractal++;
-		if (params_pt->cur_fractal == 6)
-			params_pt->cur_fractal = 0;
+		all_threads[0]->params->cur_fractal++;
+		if (all_threads[0]->params->cur_fractal == 6)
+			all_threads[0]->params->cur_fractal = 0;
 	}
-	ft_refresh_fractal(*params_pt);
+	ft_refresh_fractal(all_threads);
 }
 
-static	void	ft_change_palette(int keycode, t_params *params_pt)
+static	void	ft_change_palette(int keycode, t_thread **all_threads)
 {
 	if (keycode == 0)
 	{
-		params_pt->color_palette--;
-		if (params_pt->color_palette < 0)
-			params_pt->color_palette = 4;
+		all_threads[0]->params->color_palette--;
+		if (all_threads[0]->params->color_palette < 0)
+			all_threads[0]->params->color_palette = 4;
 	}
 	else if (keycode == 2)
 	{
-		params_pt->color_palette++;
-		if (params_pt->color_palette == 5)
-			params_pt->color_palette = 0;
+		all_threads[0]->params->color_palette++;
+		if (all_threads[0]->params->color_palette == 5)
+			all_threads[0]->params->color_palette = 0;
 	}
-	ft_refresh_fractal(*params_pt);
+	ft_refresh_fractal(all_threads);
 }
 
 int				ft_keyboard_events(int keycode, void *args)
 {
-	t_params	*params_pt;
+	t_thread	**all_threads;
 
-	params_pt = (t_params*)args;
+	all_threads = (t_thread**)args;
 	if (keycode == 53)
-		ft_exit_clean(params_pt, 1);
+		ft_exit_clean();
 	if (keycode == 126 || keycode == 124 || keycode == 125 || keycode == 123)
-		ft_move(keycode, params_pt);
+		ft_move(keycode, all_threads);
 	if (keycode == 37)
-		params_pt->julia_lock = (params_pt->julia_lock) ? 0 : 1;
+		all_threads[0]->params->julia_lock = (all_threads[0]->params->julia_lock) ? 0 : 1;
 	if (keycode == 69 || keycode == 78)
-		ft_precision(keycode, params_pt);
+		ft_precision(keycode, all_threads);
 	if (keycode == 12 || keycode == 14)
-		ft_change_fractal(keycode, params_pt);
+		ft_change_fractal(keycode, all_threads);
 	if (keycode == 0 || keycode == 2)
-		ft_change_palette(keycode, params_pt);
+		ft_change_palette(keycode, all_threads);
 	return (0);
 }
