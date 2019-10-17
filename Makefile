@@ -6,15 +6,15 @@
 #    By: tbailly- <tbailly-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/28 14:40:30 by tbailly-          #+#    #+#              #
-#    Updated: 2018/03/07 18:59:16 by tbailly-         ###   ########.fr        #
+#    Updated: 2018/10/13 22:07:49 by tbailly-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 	=	fractol
-# FLAGS	=	-Werror -Wall -Wextra -g
-FLAGS	=	-g
-LIB		=	-L libft/ -lft
-MLX		=	-lmlx -framework OpenGL -framework AppKit
+FLAGS	=	-Werror -Wall -Wextra
+# FLAGS	=	-g
+ARCHS	=	libft/libft.a minilibx/libmlx.a
+MLX		=	-framework OpenGL -framework AppKit
 
 SRCS 	= 	fractol.c \
 			ft_refresh_fractal.c \
@@ -37,8 +37,9 @@ OBJS 	= 	$(SRCS:.c=.o)
 all		: $(NAME)
 
 $(NAME) : $(OBJS)
-	make -C libft/
-	gcc $(FLAGS) -o $(NAME) $(OBJS) -I ./ $(MLX) $(LIB)
+	make -C libft/ -s
+	make -C minilibx/ -s
+	gcc $(FLAGS) -o $(NAME) $(OBJS) -I ./ $(MLX) $(ARCHS)
 
 %.o		: %.c
 	gcc -c $(FLAGS) $(SRCS)
@@ -46,25 +47,14 @@ $(NAME) : $(OBJS)
 
 clean	:
 	make -C libft/ clean
+	make -C minilibx/ clean
 	rm -rf $(OBJS)
 
 fclean	: clean
 	make -C libft/ fclean
+	make -C minilibx/ clean
 	rm -f $(NAME)
 
 re		: fclean all
 
-
-
-nl		: $(OBJS)
-	gcc $(FLAGS) -o $(NAME) $(OBJS) -I ./ $(MLX) $(LIB)
-
-nl_clean:
-	rm -rf $(OBJS)
-
-nl_fclean: clean
-	rm -f $(NAME)
-
-nl_re	: fclean all
-
-.PHONY	: all lib clean fclean re nl nl_clean nl_fclean nl_re
+.PHONY	: all lib clean fclean re
